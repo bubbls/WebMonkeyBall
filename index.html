@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -20,59 +21,66 @@
     }
   </script>
 </head>
+
 <body>
   <canvas id="game"></canvas>
   <canvas id="hud-canvas"></canvas>
   <div id="stage-fade" class="stage-fade"></div>
   <div id="overlay" class="overlay">
-    
-    <div class="menu-actions">
-      <div class="credits-menu" id="credits-menu">
-        <button class="credits-label" id="credits-toggle" type="button" aria-haspopup="true" aria-expanded="false">
-          Credits
-        </button>
 
-        <div class="credits-panel" id="credits-panel">
-          <div>
-            <a href="https://ko-fi.com/twilightpb" target="_blank" rel="noopener">TwilightPB</a>
-            <span>— Porting</span>
-          </div>
-          <div>
-            <a href="https://complexplane.dev" target="_blank" rel="noopener">ComplexPlane</a>
-            <span>— Renderer</span>
-          </div>
-          <div>
-            camthesaxman <span>— SMB1 Decompilation</span>
-          </div>
-          <div class="credits-multiline">
-            <div class="credits-title">SMB2 Decompilation</div>
-            <div class="credits-sublist">
-              <div>ComplexPlane</div>
-              <div>CraftedCart</div>
-              <div>EELI</div>
-              <div>Eucalyptus</div>
-              <div>The BombSquad</div>
+    <div class="menu-actions">
+      <div class="menu-actions-top">
+        <div class="credits-menu" id="credits-menu">
+          <button class="credits-label" id="credits-toggle" type="button" aria-haspopup="true" aria-expanded="false">
+            Credits
+          </button>
+
+          <div class="credits-panel" id="credits-panel">
+            <div>
+              <a href="https://ko-fi.com/twilightpb" target="_blank" rel="noopener">TwilightPB</a>
+              <span>— Porting</span>
+            </div>
+            <div>
+              <a href="https://complexplane.dev" target="_blank" rel="noopener">ComplexPlane</a>
+              <span>— Renderer</span>
+            </div>
+            <div>
+              camthesaxman <span>— SMB1 Decompilation</span>
+            </div>
+            <div class="credits-multiline">
+              <div class="credits-title">SMB2 Decompilation</div>
+              <div class="credits-sublist">
+                <div>ComplexPlane</div>
+                <div>CraftedCart</div>
+                <div>EELI</div>
+                <div>Eucalyptus</div>
+                <div>The BombSquad</div>
+              </div>
+            </div>
+            <div>
+              Amusement Vision <span>— Original game</span>
+            </div>
+            <div>
+              <a href="https://discord.gg/CEYjvDj" target="_blank" rel="noopener">SMB Custom Level Community</a>
+              <span>— Tools and resources</span>
             </div>
           </div>
-          <div>
-            Amusement Vision <span>— Original game</span>
-          </div>
-          <div>
-            <a href="https://discord.gg/CEYjvDj" target="_blank" rel="noopener">SMB Custom Level Community</a>
-            <span>— Tools and resources</span>
-          </div>
         </div>
+        <button id="open-settings" class="ghost compact settings-button" type="button">Settings</button>
       </div>
-      <button id="open-settings" class="ghost compact settings-button" type="button">Settings</button>
+      <a id="discord-server-link" class="menu-action-link" href="https://discord.gg/j9RRPBTGxt" target="_blank" rel="noopener noreferrer">
+        <img class="discord-server-icon" src="./discord-favicon.ico" alt="" aria-hidden="true" />
+        <span>Discord Server</span>
+      </a>
     </div>
     <div class="panel" id="main-menu">
-      <h1>Super Monkey Ball 1</h1>
-      <p>Standard gameplay (Beginner / Advanced / Expert).</p>
+      <h1>Super Monkey Ball</h1>
+      <p>Select a mode.</p>
 
       <div class="panel-section">
-        <button id="open-level-select" class="menu-button" type="button">
-          <span class="menu-button-title">Level Select</span>
-          <span class="menu-button-subtitle">Choose game source and stage</span>
+        <button id="open-singleplayer" class="menu-button" type="button">
+          <span class="menu-button-title">Singleplayer</span>
+          <span class="menu-button-subtitle">Course play and practice</span>
         </button>
       </div>
 
@@ -83,22 +91,86 @@
         </button>
       </div>
 
-      <div class="row">
+      <div class="panel-section">
+        <button id="open-replay-library" class="menu-button" type="button">
+          <span class="menu-button-title">Replays</span>
+          <span class="menu-button-subtitle">Saved local replay library</span>
+        </button>
+      </div>
+
+      <div class="row hidden">
         <button id="start" disabled>Start</button>
         <button id="resume" class="ghost" disabled>Resume</button>
       </div>
       <div class="hint">
         <div>Controls: WASD / Arrow Keys = tilt, R = reset stage, N = skip stage</div>
         <div>If you have a controller plugged in, it should work too.</div>
-        <div>Don't worry about reporting bugs. I probably already know about it - it'll get fixed.</div>
+      </div>
+      <div id="main-menu-version" class="menu-version" aria-label="Build version"></div>
+    </div>
+    <div class="panel hidden" id="singleplayer-menu">
+      <div class="menu-header">
+        <button id="singleplayer-back" class="ghost compact" type="button">Back</button>
+        <div>
+          <h1>Singleplayer</h1>
+          <p>Pick course play or practice.</p>
+        </div>
+      </div>
+      <div class="panel-section">
+        <button id="open-course-play" class="menu-button" type="button">
+          <span class="menu-button-title">Course Play</span>
+          <span class="menu-button-subtitle">Start from floor 1</span>
+        </button>
+      </div>
+      <div class="panel-section">
+        <button id="open-practice" class="menu-button" type="button">
+          <span class="menu-button-title">Practice</span>
+          <span class="menu-button-subtitle">Choose any stage, then repeat it</span>
+        </button>
+      </div>
+    </div>
+    <div class="panel hidden" id="course-play-menu">
+      <div class="menu-header">
+        <button id="course-play-back" class="ghost compact" type="button">Back</button>
+        <div>
+          <h1>Course Play</h1>
+          <p>Choose source and difficulty.</p>
+        </div>
+      </div>
+      <div class="panel-section">
+        <label class="field">
+          <span>Game Source</span>
+          <select id="course-play-source"></select>
+        </label>
+      </div>
+      <div class="panel-section">
+        <label class="field">
+          <span>Difficulty</span>
+          <select id="course-play-difficulty"></select>
+        </label>
+      </div>
+      <div class="panel-section">
+        <button id="course-play-start" type="button">Start Course</button>
+      </div>
+    </div>
+    <div class="panel hidden pause-menu-panel" id="pause-menu">
+      <div class="pause-menu-frame">
+        <div class="pause-menu-title">PAUSE</div>
+        <div class="pause-menu-list" role="menu" aria-label="Pause Menu">
+          <button id="pause-resume" class="pause-menu-item" type="button">Resume</button>
+          <button id="pause-retry" class="pause-menu-item" type="button">Retry</button>
+          <button id="pause-save-replay" class="pause-menu-item" type="button">Save Replay</button>
+          <button id="pause-view-stage" class="pause-menu-item" type="button">View Stage</button>
+          <button id="pause-return-main-menu" class="pause-menu-item" type="button">Return to Main Menu</button>
+        </div>
       </div>
     </div>
     <div class="panel hidden" id="level-select-menu">
       <div class="menu-header">
         <button id="level-select-back" class="ghost compact" type="button">Back</button>
         <div>
-          <h1>Level Select</h1>
-          <p>Choose the game source, course, and stage.</p>
+          <h1 id="level-select-title">Level Select</h1>
+          <p id="level-select-subtitle">Choose the game source, course, and stage.</p>
         </div>
       </div>
       <div class="panel-section">
@@ -125,17 +197,6 @@
         </div>
         <input id="pack-file" class="hidden" type="file" accept=".zip" />
         <input id="pack-folder" class="hidden" type="file" webkitdirectory />
-      </div>
-      <div class="panel-section">
-        <div class="panel-section-header">
-          <h2>Replay</h2>
-        </div>
-        <div class="pack-controls">
-          <button id="replay-save" class="ghost compact" type="button">Save Replay</button>
-          <button id="replay-load" class="ghost compact" type="button">Load Replay</button>
-          <div id="replay-status" class="pack-status">Replay: none</div>
-        </div>
-        <input id="replay-file" class="hidden" type="file" accept=".json" />
       </div>
       <div class="panel-section">
         <div class="panel-section-header">
@@ -198,6 +259,10 @@
           </div>
         </div>
       </div>
+      <div id="level-select-actions" class="panel-section">
+        <button id="level-select-confirm" type="button">Confirm</button>
+        <div class="control-hint">Return to main menu with this selection.</div>
+      </div>
       <div id="lobby-stage-actions" class="panel-section hidden">
         <div class="panel-section-header">
           <h2>Lobby Stage</h2>
@@ -206,111 +271,146 @@
         <div class="control-hint">Updates the lobby selection without starting the match.</div>
       </div>
     </div>
+    <div class="panel hidden" id="replay-library-menu">
+      <div class="menu-header">
+        <button id="replay-library-back" class="ghost compact" type="button">Back</button>
+        <div>
+          <h1>Replays</h1>
+          <p>Local replay library.</p>
+        </div>
+      </div>
+      <div class="panel-section">
+        <div class="row">
+          <button id="replay-library-import" class="ghost" type="button">Import Replay</button>
+          <button id="replay-library-refresh" class="ghost" type="button">Refresh</button>
+          <div id="replay-library-status" class="pack-status">Replays: idle</div>
+        </div>
+        <input id="replay-library-file" class="hidden" type="file" accept=".json" />
+        <div id="replay-library-list" class="leaderboard-list"></div>
+      </div>
+    </div>
     <div class="multiplayer-layout hidden" id="multiplayer-layout">
       <div class="panel hidden" id="multiplayer-menu">
-      <div class="menu-header">
-        <button id="multiplayer-back" class="ghost compact" type="button">Back</button>
-        <div>
-          <h1>Online Multiplayer</h1>
-          <p>Join public lobbies, invite friends, or host your own room.</p>
-        </div>
-      </div>
-      <div id="multiplayer-browser" class="multiplayer-view">
-        <div class="panel-section">
-          <div class="panel-section-header">
-            <h2>Public Lobbies</h2>
-            <button id="lobby-refresh" class="ghost compact" type="button">Refresh</button>
-          </div>
-          <div id="lobby-status" class="pack-status">Lobby: idle</div>
-          <div id="lobby-list" class="lobby-list"></div>
-        </div>
-        <div class="panel-section">
-          <div class="panel-section-header">
-            <h2>Join Private Room</h2>
-          </div>
-          <div class="multiplayer-row">
-            <input id="lobby-code" class="text-input" type="text" placeholder="Room code" />
-            <button id="lobby-join" class="ghost compact" type="button">Join</button>
+        <div class="menu-header">
+          <button id="multiplayer-back" class="ghost compact" type="button">Back</button>
+          <div>
+            <h1>Online Multiplayer</h1>
+            <p>Join public lobbies, invite friends, or host your own room.</p>
           </div>
         </div>
-        <div class="panel-section">
-          <div class="panel-section-header">
-            <h2>Host Room</h2>
+        <div id="multiplayer-browser" class="multiplayer-view">
+          <div class="panel-section">
+            <div class="panel-section-header">
+              <h2>Public Lobbies</h2>
+              <button id="lobby-refresh" class="ghost compact" type="button">Refresh</button>
+            </div>
+            <div id="lobby-status" class="pack-status">Lobby: idle</div>
+            <div id="lobby-list" class="lobby-list"></div>
           </div>
-          <div class="multiplayer-row">
-            <button id="lobby-create" class="ghost compact" type="button">Create Room</button>
-            <label class="checkbox-field">
-              <input id="lobby-public" type="checkbox" checked />
-              <span>Public</span>
+          <div class="panel-section">
+            <div class="panel-section-header">
+              <h2>Join Private Room</h2>
+            </div>
+            <div class="multiplayer-row">
+              <input id="lobby-code" class="text-input" type="password" placeholder="Room code" autocomplete="off" />
+              <button id="lobby-join" class="ghost compact" type="button">Join</button>
+            </div>
+          </div>
+          <div class="panel-section">
+            <div class="panel-section-header">
+              <h2>Host Room</h2>
+            </div>
+            <div class="multiplayer-row">
+              <button id="lobby-create" class="ghost compact" type="button">Create Room</button>
+              <label class="checkbox-field">
+                <input id="lobby-public" type="checkbox" checked />
+                <span>Public</span>
+              </label>
+            </div>
+            <div class="multiplayer-row">
+              <input id="lobby-name" class="text-input" type="text" placeholder="Lobby name (optional)" maxlength="64" />
+            </div>
+          </div>
+        </div>
+        <div id="multiplayer-lobby" class="multiplayer-view hidden">
+          <div class="panel-section">
+            <div class="panel-section-header">
+              <h2>Lobby</h2>
+              <button id="lobby-copy-code" class="ghost compact hidden" type="button">Copy Room Code</button>
+              <button id="lobby-leave" class="ghost compact hidden" type="button">Leave Room</button>
+            </div>
+            <div id="lobby-room-info" class="lobby-room-info"></div>
+            <label class="field">
+              <span>Lobby Name</span>
+              <input id="lobby-room-name" class="text-input" type="text" maxlength="64" />
             </label>
+            <div id="lobby-room-status" class="lobby-room-status"></div>
           </div>
-          <div class="multiplayer-row">
-            <input id="lobby-name" class="text-input" type="text" placeholder="Lobby name (optional)" maxlength="64" />
+          <div class="panel-section">
+            <div class="panel-section-header">
+              <h2>Players</h2>
+            </div>
+            <div id="lobby-player-list" class="lobby-player-list"></div>
+          </div>
+          <div class="panel-section">
+            <div class="panel-section-header">
+              <h2>Match Settings</h2>
+            </div>
+            <div class="lobby-setting">
+              <span>Selected Stage</span>
+              <button id="lobby-stage-button" class="lobby-setting-value lobby-setting-button" type="button">
+                <span id="lobby-stage-info">Unknown</span>
+              </button>
+            </div>
+            <label class="field">
+              <span>Gamemode</span>
+              <select id="lobby-gamemode">
+                <option value="standard">Standard</option>
+                <option value="chained_together">Chained Together</option>
+              </select>
+            </label>
+            <div id="lobby-gamemode-options" class="lobby-gamemode-options hidden"></div>
+            <label class="field">
+              <span>Max Players</span>
+              <select id="lobby-max-players">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+              </select>
+            </label>
+            <div id="lobby-max-players-warning" class="control-hint lobby-max-players-warning hidden">
+              Increased max players may negatively impact gameplay performance.
+            </div>
+            <label class="checkbox-field">
+              <input id="lobby-collision" type="checkbox" checked />
+              <span>Player Collision</span>
+            </label>
+            <label class="checkbox-field">
+              <input id="lobby-infinite-time" type="checkbox" />
+              <span>Infinite Time</span>
+            </label>
+            <label class="checkbox-field">
+              <input id="lobby-locked" type="checkbox" />
+              <span>Lock Room</span>
+            </label>
+            <div class="control-hint">Only the host can change match settings.</div>
+          </div>
+          <div class="panel-section">
+            <button id="lobby-start" type="button">Start Match</button>
           </div>
         </div>
-      </div>
-      <div id="multiplayer-lobby" class="multiplayer-view hidden">
-        <div class="panel-section">
-          <div class="panel-section-header">
-            <h2>Lobby</h2>
-            <button id="lobby-leave" class="ghost compact hidden" type="button">Leave Room</button>
-          </div>
-          <div id="lobby-room-info" class="lobby-room-info"></div>
-          <label class="field">
-            <span>Lobby Name</span>
-            <input id="lobby-room-name" class="text-input" type="text" maxlength="64" />
-          </label>
-          <div id="lobby-room-status" class="lobby-room-status"></div>
-        </div>
-        <div class="panel-section">
-          <div class="panel-section-header">
-            <h2>Players</h2>
-          </div>
-          <div id="lobby-player-list" class="lobby-player-list"></div>
-        </div>
-        <div class="panel-section">
-          <div class="panel-section-header">
-            <h2>Match Settings</h2>
-          </div>
-          <div class="lobby-setting">
-            <span>Selected Stage</span>
-            <button id="lobby-stage-button" class="lobby-setting-value lobby-setting-button" type="button">
-              <span id="lobby-stage-info">Unknown</span>
-            </button>
-          </div>
-          <label class="field">
-            <span>Gamemode</span>
-            <select id="lobby-gamemode">
-              <option value="standard">Standard</option>
-              <option value="chained_together">Chained Together</option>
-            </select>
-          </label>
-          <label class="field">
-            <span>Max Players</span>
-            <select id="lobby-max-players">
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-            </select>
-          </label>
-          <label class="checkbox-field">
-            <input id="lobby-collision" type="checkbox" checked />
-            <span>Player Collision</span>
-          </label>
-          <label class="checkbox-field">
-            <input id="lobby-locked" type="checkbox" />
-            <span>Lock Room</span>
-          </label>
-          <div class="control-hint">Only the host can change match settings.</div>
-        </div>
-        <div class="panel-section">
-          <button id="lobby-start" type="button">Start Match</button>
-        </div>
-      </div>
       </div>
       <div class="panel lobby-chat-panel hidden" id="lobby-chat-panel">
         <div class="panel-section-header">
@@ -339,6 +439,7 @@
       <div class="panel-section">
         <div class="row">
           <button id="ingame-resume" class="ghost" type="button">Resume</button>
+          <button id="ingame-return-lobby" class="ghost hidden" type="button">Return to Lobby</button>
           <button id="ingame-leave" type="button">Leave Match</button>
         </div>
       </div>
@@ -455,6 +556,36 @@
               </div>
             </div>
             <div class="control-hint">PNG/JPG/WebP only. Max 512x512 and 150kb.</div>
+            <div class="profile-ball-row">
+              <label class="field">
+                <span>Hemisphere 1 Color</span>
+                <input id="profile-ball-hemi1-color" class="color-input" type="color" value="#ff0000" />
+              </label>
+              <label class="field">
+                <span>Hemisphere 2 Color</span>
+                <input id="profile-ball-hemi2-color" class="color-input" type="color" value="#ffffff" />
+              </label>
+            </div>
+            <div class="profile-ball-texture-row">
+              <label class="field">
+                <span>Hemisphere 1 Texture</span>
+                <input id="profile-ball-hemi1-texture-input" class="text-input" type="file" accept="image/png,image/jpeg,image/webp" />
+                <button id="profile-ball-hemi1-texture-clear" class="ghost compact" type="button">Clear Hemisphere 1 Texture</button>
+              </label>
+              <label class="field">
+                <span>Hemisphere 2 Texture</span>
+                <input id="profile-ball-hemi2-texture-input" class="text-input" type="file" accept="image/png,image/jpeg,image/webp" />
+                <button id="profile-ball-hemi2-texture-clear" class="ghost compact" type="button">Clear Hemisphere 2 Texture</button>
+              </label>
+            </div>
+            <div class="profile-ball-preview-row">
+              <div class="profile-ball-preview-label">Ball Preview</div>
+              <div class="profile-ball-preview-window">
+                <canvas id="profile-ball-preview" width="320" height="220" aria-label="Ball preview"></canvas>
+              </div>
+            </div>
+            <div id="profile-ball-texture-error" class="control-hint hidden"></div>
+            <div class="control-hint">Ball textures sync in multiplayer. Max 512x512 and 100kb per hemisphere.</div>
           </div>
           <div class="panel-section">
             <div class="panel-section-header">
@@ -467,6 +598,10 @@
             <label class="checkbox-field">
               <input id="hide-lobby-names" type="checkbox" />
               <span>Hide Lobby Names</span>
+            </label>
+            <label class="checkbox-field">
+              <input id="hide-remote-ball-textures" type="checkbox" />
+              <span>Hide Remote Ball Textures</span>
             </label>
             <div class="control-hint">Replaces names with deterministic aliases for safer sharing.</div>
           </div>
@@ -519,8 +654,14 @@
       field?.classList.add('hidden');
     } else {
       const options = [];
-      if (hasGyro) options.push({ value: 'gyro', label: 'Gyro' });
-      if (hasTouch) options.push({ value: 'touch', label: 'Touchscreen' });
+      if (hasGyro) options.push({
+        value: 'gyro',
+        label: 'Gyro'
+      });
+      if (hasTouch) options.push({
+        value: 'touch',
+        label: 'Touchscreen'
+      });
 
       if (options.length === 0) {
         field.classList.add('hidden');
@@ -596,5 +737,8 @@
   </script>
 
   <script type="module" src="./dist/main.js"></script>
+  <!-- Cloudflare Pages Analytics -->
+  <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "ba4e488caf8849e9af3e0cc5ff39ffaf"}'></script><!-- Cloudflare Pages Analytics -->
 </body>
+
 </html>

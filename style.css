@@ -6,6 +6,9 @@
   --muted: #b7b7c2;
   --accent: #ff9f1c;
   --panel: rgba(12, 12, 18, 0.85);
+  --pause-text-dim: #8a861d;
+  --pause-text-hot: #ffe84d;
+  --pause-text-shadow: #242100;
 }
 
 * {
@@ -148,6 +151,15 @@ body.gameplay-active {
   display: none;
 }
 
+.overlay.pause-menu-active {
+  background: rgba(0, 0, 0, 0.58);
+  backdrop-filter: blur(2px);
+}
+
+.overlay.pause-menu-active .menu-actions {
+  display: none;
+}
+
 .modal {
   position: fixed;
   inset: 0;
@@ -210,6 +222,32 @@ body.gameplay-active {
   overscroll-behavior: contain;
 }
 
+#main-menu {
+  position: relative;
+  padding-bottom: 48px;
+}
+
+.menu-version {
+  position: absolute;
+  right: 18px;
+  bottom: 14px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 11px;
+  line-height: 1;
+  color: rgba(183, 183, 194, 0.92);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  user-select: text;
+}
+
+#replay-library-menu {
+  width: min(1024px, 96vw);
+}
+
+#settings-menu {
+  width: min(760px, 96vw);
+}
+
 .panel h1 {
   margin: 0 0 8px;
   font-size: 28px;
@@ -225,6 +263,101 @@ body.gameplay-active {
 .panel p {
   margin: 0 0 16px;
   color: var(--muted);
+}
+
+.pause-menu-panel {
+  width: min(440px, 92vw);
+  max-height: calc(100vh - 32px);
+  padding: 12px;
+  border-radius: 0;
+  border: 2px solid rgba(255, 233, 120, 0.68);
+  background:
+    linear-gradient(180deg, rgba(24, 22, 12, 0.94), rgba(14, 12, 5, 0.96)),
+    radial-gradient(240px 120px at 20% 0%, rgba(255, 224, 96, 0.2), rgba(255, 224, 96, 0));
+  box-shadow:
+    0 0 0 2px rgba(84, 70, 20, 0.75) inset,
+    0 16px 42px rgba(0, 0, 0, 0.62);
+  animation: smb1-pause-enter 180ms ease-out;
+}
+
+.pause-menu-frame {
+  border: 1px solid rgba(255, 236, 142, 0.45);
+  padding: 16px 18px 18px;
+  background: rgba(6, 6, 4, 0.34);
+}
+
+.pause-menu-title {
+  margin: 0 0 12px;
+  text-align: center;
+  letter-spacing: 3px;
+  font-family: "Trebuchet MS", "Segoe UI", "Arial Black", sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--pause-text-hot);
+  text-shadow:
+    0 2px 0 #443900,
+    0 0 12px rgba(255, 234, 124, 0.45);
+}
+
+.pause-menu-list {
+  display: grid;
+  gap: 6px;
+}
+
+.pause-menu-item {
+  flex: none;
+  width: 100%;
+  justify-content: flex-start;
+  padding: 8px 10px;
+  border: none;
+  background: transparent;
+  border-radius: 0;
+  color: var(--pause-text-dim);
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-align: left;
+  text-shadow: 2px 2px 0 var(--pause-text-shadow);
+  transition: color 100ms linear;
+}
+
+.pause-menu-item:hover,
+.pause-menu-item:focus-visible,
+.pause-menu-item.is-selected {
+  color: var(--pause-text-hot);
+  outline: none;
+  animation: smb1-pause-blink 420ms steps(2, end) infinite;
+}
+
+@keyframes smb1-pause-enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes smb1-pause-blink {
+  0% {
+    filter: brightness(1.35);
+  }
+
+  49% {
+    filter: brightness(1.35);
+  }
+
+  50% {
+    filter: brightness(0.96);
+  }
+
+  100% {
+    filter: brightness(0.96);
+  }
 }
 
 .field {
@@ -384,6 +517,67 @@ body.gameplay-active {
   width: 100%;
 }
 
+.profile-ball-row {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.profile-ball-texture-row {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.profile-ball-texture-row .field {
+  display: grid;
+  gap: 6px;
+}
+
+.profile-ball-preview-row {
+  margin-top: 12px;
+  display: grid;
+  gap: 8px;
+}
+
+.profile-ball-preview-label {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.profile-ball-preview-window {
+  width: min(360px, 100%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  background: #111419;
+  overflow: hidden;
+}
+
+.profile-ball-preview-window canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+}
+
+.color-input {
+  width: 100%;
+  height: 40px;
+  padding: 4px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(12, 12, 18, 0.6);
+}
+
+@media (max-width: 740px) {
+
+  .profile-ball-row,
+  .profile-ball-texture-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 .menu-header {
   display: flex;
   align-items: flex-start;
@@ -530,9 +724,11 @@ body.gameplay-active {
   0% {
     opacity: 1;
   }
+
   83.333% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
@@ -618,6 +814,11 @@ body.gameplay-active {
   border-radius: 10px;
   color: var(--text);
   font-size: 14px;
+}
+
+input[type='password']::-ms-reveal,
+input[type='password']::-ms-clear {
+  display: none;
 }
 
 .lobby-list {
@@ -750,6 +951,12 @@ body.gameplay-active {
 .lobby-setting-button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.lobby-gamemode-options {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 12px;
 }
 
 .avatar {
@@ -889,6 +1096,10 @@ body.gameplay-active {
 
 .control-hint.error {
   color: #ffb3b3;
+}
+
+.lobby-max-players-warning {
+  color: #ffd36c;
 }
 
 .response-curve {
@@ -1078,10 +1289,17 @@ button:disabled {
   left: 12px;
   z-index: 11;
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
   font-size: 13px;
   color: var(--fg);
+}
+
+.menu-actions-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .credits-menu {
@@ -1091,8 +1309,36 @@ button:disabled {
 }
 
 .settings-button {
+  flex: 0 0 auto;
   padding: 8px 12px;
   border-radius: 10px;
+}
+
+.menu-action-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: transparent;
+  color: var(--fg);
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.menu-action-link:focus-visible {
+  outline: 2px solid rgba(255, 159, 28, 0.8);
+  outline-offset: 2px;
+}
+
+.discord-server-icon {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  flex: 0 0 auto;
 }
 
 /* Hover "bridge" so the menu doesn't vanish while moving into the panel */
@@ -1209,4 +1455,84 @@ button:disabled {
   z-index: 12;
   padding: 6px 10px;
   font-size: 11px;
+}
+
+.leaderboard-list {
+  margin-top: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(6, 6, 10, 0.55);
+  padding: 10px 12px;
+  max-height: 320px;
+  overflow: auto;
+  font-size: 13px;
+}
+
+.leaderboard-row {
+  display: grid;
+  grid-template-columns: 32px 1fr 120px;
+  gap: 10px;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.leaderboard-row.admin-row {
+  grid-template-columns: 32px 1fr 120px auto;
+}
+
+.leaderboard-row:last-child {
+  border-bottom: none;
+}
+
+.leaderboard-rank {
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+.leaderboard-value {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.9;
+}
+
+.replay-library-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.replay-library-row:last-child {
+  border-bottom: none;
+}
+
+.replay-library-info {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.replay-library-title {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.replay-library-subtitle {
+  margin-top: 2px;
+  opacity: 0.75;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.replay-library-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
