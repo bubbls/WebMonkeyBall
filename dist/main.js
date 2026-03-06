@@ -81675,6 +81675,7 @@ var World2 = class {
       return;
     }
     const img = new Image();
+    img.crossOrigin = "anonymous";
     img.onload = () => {
       const width = img.naturalWidth || img.width;
       const height = img.naturalHeight || img.height;
@@ -82594,6 +82595,7 @@ var World2 = class {
     }
     this.streakExternalTextureLoading.add(textureName);
     const img = new Image();
+    img.crossOrigin = "anonymous";
     img.onload = () => {
       this.streakExternalTextureLoading.delete(textureName);
       const width = img.naturalWidth || img.width;
@@ -82678,6 +82680,7 @@ var World2 = class {
     }
     this.ballExternalTextureLoading.add(textureName);
     const img = new Image();
+    img.crossOrigin = "anonymous";
     img.onload = () => {
       this.ballExternalTextureLoading.delete(textureName);
       const width = img.naturalWidth || img.width;
@@ -86841,6 +86844,7 @@ var SMB2_HUD_ASSET_PATHS = {
 function loadImage(src) {
   return new Promise((resolve, reject) => {
     const img = new Image();
+    img.crossOrigin = "anonymous";
     img.onload = () => resolve(img);
     img.onerror = (err2) => reject(err2);
     img.src = src;
@@ -98652,6 +98656,7 @@ function saveLocalProfile(profile) {
 function loadImageDimensions(url) {
   return new Promise((resolve) => {
     const img = new Image();
+    img.crossOrigin = "anonymous";
     img.onload = () => resolve({
       width: img.naturalWidth || img.width,
       height: img.naturalHeight || img.height
